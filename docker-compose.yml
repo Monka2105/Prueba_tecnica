@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: mysql-financiera
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: prueba_tecnica_financiera
+    ports:
+      - "3307:3306"   # 3307 en tu Windows -> 3306 dentro del contenedor
+                       # (así no choca con el MySQL que ya tienes instalado en 3306)
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./prueba_tecnica_financiera.sql:/docker-entrypoint-initdb.d/1-ddl.sql
+      - ./dml_datos_prueba.sql:/docker-entrypoint-initdb.d/2-dml.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    container_name: apirestfull
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/prueba_tecnica_financiera
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:

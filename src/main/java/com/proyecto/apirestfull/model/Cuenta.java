@@ -48,6 +48,6 @@ public class Cuenta {
         if (estado == null) estado = true;
         if (saldo == null) saldo = BigDecimal.ZERO;
     }
-
+    
     
 }

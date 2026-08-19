@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "producto_financiero")
@@ -46,5 +47,5 @@ public class ProductoFinanciero {
     public enum TipoProducto {
         CUENTA_AHORROS, CUENTA_CORRIENTE, TARJETA_CREDITO, PRESTAMO, CDT
     }
-    
+   
 }
