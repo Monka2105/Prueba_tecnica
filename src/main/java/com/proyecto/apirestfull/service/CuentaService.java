@@ -9,5 +9,7 @@ public interface CuentaService {
     Cuenta obtenerPorId(Integer id);
     List<Cuenta> obtenerPorCliente(Integer clienteId);
     Cuenta crear(Cuenta cuenta);
-    void eliminar(Integer id);
+    Cuenta activar(Integer id);
+    Cuenta inactivar(Integer id);
+    Cuenta cancelar(Integer id);
 }

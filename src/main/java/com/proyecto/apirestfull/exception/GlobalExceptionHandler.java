@@ -23,6 +23,26 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    @ExceptionHandler(ClienteMenorEdadException.class)
+    public ResponseEntity<Map<String, Object>> handleMenorEdad(ClienteMenorEdadException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(SaldoInvalidoException.class)
+    public ResponseEntity<Map<String, Object>> handleSaldoInvalido(SaldoInvalidoException ex) {
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(ClienteConCuentasException.class)
+    public ResponseEntity<Map<String, Object>> handleClienteConCuentas(ClienteConCuentasException ex) {
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(CuentaNoCancelableException.class)
+    public ResponseEntity<Map<String, Object>> handleCuentaNoCancelable(CuentaNoCancelableException ex) {
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
         String mensaje = ex.getBindingResult().getFieldErrors().stream()

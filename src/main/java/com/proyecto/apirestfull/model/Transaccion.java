@@ -1,6 +1,8 @@
 package com.proyecto.apirestfull.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -13,26 +15,33 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Transaccion {
-    
-     @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_transaccion")
     private Integer id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuenta_id", nullable = false)
     private Cuenta cuenta;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cuenta_destino_id")
-    private Cuenta cuentaDestino;
+    @JoinColumn(name = "cuenta_relacionada_id")
+    private Cuenta cuentaRelacionada;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_transaccion", nullable = false)
     private TipoTransaccion tipoTransaccion;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_movimiento", nullable = false)
+    private TipoMovimiento tipoMovimiento;
+
+    @NotNull
+    @Positive
     @Column(name = "monto", nullable = false, precision = 15, scale = 2)
     private BigDecimal monto;
 
@@ -51,7 +60,10 @@ public class Transaccion {
     }
 
     public enum TipoTransaccion {
-        DEPOSITO, RETIRO, TRANSFERENCIA, PAGO
+        CONSIGNACION, RETIRO, TRANSFERENCIA
     }
 
+    public enum TipoMovimiento {
+        CREDITO, DEBITO
+    }
 }
