@@ -21,6 +21,9 @@
           <th>Estado</th>
           <th>Saldo</th>
           <th>Saldo disponible</th>
+          <th>Exenta GMF</th>
+          <th>Fecha creación</th>
+          <th>Fecha modificación</th>
           <th></th>
         </tr>
       </thead>
@@ -36,6 +39,9 @@
           <td><span class="badge" [ngClass]="cuenta.estado?.toLowerCase()">{{ cuenta.estado }}</span></td>
           <td>{{ cuenta.saldo | number: '1.2-2' }}</td>
           <td>{{ cuenta.saldoDisponible | number: '1.2-2' }}</td>
+          <td>{{ cuenta.exentaGmf ? 'Sí' : 'No' }}</td>
+          <td>{{ cuenta.fechaCreacion | date: 'short' }}</td>
+          <td>{{ cuenta.fechaModificacion | date: 'short' }}</td>
           <td class="actions-cell">
             <a class="btn secondary small" [routerLink]="['/transacciones']" [queryParams]="{ cuentaId: cuenta.id }">Movimientos</a>
             <button class="btn secondary small" *ngIf="cuenta.estado !== 'ACTIVA' && cuenta.estado !== 'CANCELADA'" (click)="activar(cuenta)">Activar</button>

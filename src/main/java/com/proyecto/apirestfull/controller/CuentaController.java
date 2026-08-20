@@ -67,6 +67,7 @@ public class CuentaController {
         return Cuenta.builder()
                 .tipoCuenta(dto.getTipoCuenta())
                 .saldo(dto.getSaldo())
+                .exentaGmf(dto.getExentaGmf())
                 .cliente(Cliente.builder().id(dto.getClienteId()).build())
                 .build();
     }

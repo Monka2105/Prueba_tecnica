@@ -19,6 +19,7 @@ export class CuentaFormComponent implements OnInit {
   form = this.fb.group({
     tipoCuenta: ['CUENTA_AHORROS', Validators.required],
     saldo: [0, [Validators.required, Validators.min(0)]],
+    exentaGmf: [false],
     clienteId: [null as number | null, Validators.required]
   });
 
@@ -52,6 +53,7 @@ export class CuentaFormComponent implements OnInit {
       .crear({
         tipoCuenta: valor.tipoCuenta as any,
         saldo: Number(valor.saldo),
+        exentaGmf: Boolean(valor.exentaGmf),
         clienteId: Number(valor.clienteId)
       })
       .subscribe({

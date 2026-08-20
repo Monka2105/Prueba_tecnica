@@ -14,6 +14,8 @@
           <th>Nombre</th>
           <th>Email</th>
           <th>Fecha nacimiento</th>
+          <th>Fecha creación</th>
+          <th>Fecha modificación</th>
           <th></th>
         </tr>
       </thead>
@@ -23,6 +25,8 @@
           <td>{{ cliente.nombres }} {{ cliente.apellidos }}</td>
           <td>{{ cliente.email }}</td>
           <td>{{ cliente.fechaNacimiento }}</td>
+          <td>{{ cliente.fechaCreacion | date: 'short' }}</td>
+          <td>{{ cliente.fechaModificacion | date: 'short' }}</td>
           <td class="actions-cell">
             <a class="btn secondary small" [routerLink]="['/cuentas']" [queryParams]="{ clienteId: cliente.id }">Cuentas</a>
             <a class="btn secondary small" [routerLink]="['/clientes', cliente.id, 'editar']">Editar</a>

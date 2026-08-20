@@ -18,6 +18,8 @@ public class CuentaRequestDTO {
 
     private BigDecimal saldo;
 
+    private Boolean exentaGmf;
+
     @NotNull
     private Integer clienteId;
 }
