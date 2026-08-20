@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h1>Cuentas</h1>
+  <a class="btn" routerLink="/cuentas/nueva">+ Nueva cuenta</a>
+</div>
+
+<div class="alert error" *ngIf="error">{{ error }}</div>
+
+<div class="card" *ngIf="clienteId" style="display:flex;align-items:center;justify-content:space-between;">
+  <span>Filtrando por cliente #{{ clienteId }}</span>
+  <button class="btn secondary small" (click)="limpiarFiltro()">Quitar filtro</button>
+</div>
+
+<div class="card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Tipo</th>
+          <th>Cliente</th>
+          <th>Estado</th>
+          <th>Saldo</th>
+          <th>Saldo disponible</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cuenta of cuentas">
+          <td>{{ cuenta.numeroCuenta }}</td>
+          <td>{{ cuenta.tipoCuenta === 'CUENTA_AHORROS' ? 'Ahorros' : 'Corriente' }}</td>
+          <td>
+            <a [routerLink]="['/cuentas']" [queryParams]="{ clienteId: cuenta.clienteId }">
+              {{ cuenta.clienteNombreCompleto }}
+            </a>
+          </td>
+          <td><span class="badge" [ngClass]="cuenta.estado?.toLowerCase()">{{ cuenta.estado }}</span></td>
+          <td>{{ cuenta.saldo | number: '1.2-2' }}</td>
+          <td>{{ cuenta.saldoDisponible | number: '1.2-2' }}</td>
+          <td class="actions-cell">
+            <a class="btn secondary small" [routerLink]="['/transacciones']" [queryParams]="{ cuentaId: cuenta.id }">Movimientos</a>
+            <button class="btn secondary small" *ngIf="cuenta.estado !== 'ACTIVA' && cuenta.estado !== 'CANCELADA'" (click)="activar(cuenta)">Activar</button>
+            <button class="btn secondary small" *ngIf="cuenta.estado === 'ACTIVA'" (click)="inactivar(cuenta)">Inactivar</button>
+            <button class="btn danger small" *ngIf="cuenta.estado !== 'CANCELADA'" (click)="cancelar(cuenta)">Cancelar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="empty" *ngIf="!cargando && cuentas.length === 0">No hay cuentas registradas.</p>
+    <p class="empty" *ngIf="cargando">Cargando...</p>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="page-header">
+  <h1>{{ editando ? 'Editar cliente' : 'Nuevo cliente' }}</h1>
+  <a class="btn secondary" routerLink="/clientes">Volver</a>
+</div>
+
+<div class="alert error" *ngIf="error">{{ error }}</div>
+
+<div class="card" *ngIf="!cargando">
+  <form [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="tipoDocumento">Tipo de documento</label>
+        <select id="tipoDocumento" formControlName="tipoDocumento">
+          <option *ngFor="let tipo of tiposDocumento" [value]="tipo">{{ tipo }}</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="numeroDocumento">Número de documento</label>
+        <input id="numeroDocumento" type="text" formControlName="numeroDocumento" />
+        <span class="form-error" *ngIf="form.get('numeroDocumento')?.touched && form.get('numeroDocumento')?.invalid">
+          El número de documento es obligatorio.
+        </span>
+      </div>
+
+      <div class="form-field">
+        <label for="nombres">Nombres</label>
+        <input id="nombres" type="text" formControlName="nombres" />
+        <span class="form-error" *ngIf="form.get('nombres')?.touched && form.get('nombres')?.invalid">
+          Ingresa al menos 2 caracteres.
+        </span>
+      </div>
+
+      <div class="form-field">
+        <label for="apellidos">Apellidos</label>
+        <input id="apellidos" type="text" formControlName="apellidos" />
+        <span class="form-error" *ngIf="form.get('apellidos')?.touched && form.get('apellidos')?.invalid">
+          Ingresa al menos 2 caracteres.
+        </span>
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" />
+        <span class="form-error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+          Ingresa un email válido.
+        </span>
+      </div>
+
+      <div class="form-field">
+        <label for="fechaNacimiento">Fecha de nacimiento</label>
+        <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" />
+        <span class="form-error" *ngIf="form.get('fechaNacimiento')?.touched && form.get('fechaNacimiento')?.invalid">
+          La fecha de nacimiento es obligatoria.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" type="submit" [disabled]="guardando">{{ guardando ? 'Guardando...' : 'Guardar' }}</button>
+      <a class="btn secondary" routerLink="/clientes">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<p class="empty" *ngIf="cargando">Cargando...</p>

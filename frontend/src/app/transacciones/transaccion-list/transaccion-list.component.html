@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h1>Transacciones</h1>
+  <a class="btn" routerLink="/transacciones/nueva">+ Nueva transacción</a>
+</div>
+
+<div class="alert error" *ngIf="error">{{ error }}</div>
+
+<div class="card" *ngIf="cuentaId" style="display:flex;align-items:center;justify-content:space-between;">
+  <span>Filtrando por cuenta #{{ cuentaId }}</span>
+  <button class="btn secondary small" (click)="limpiarFiltro()">Quitar filtro</button>
+</div>
+
+<div class="card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Cuenta</th>
+          <th>Tipo</th>
+          <th>Movimiento</th>
+          <th>Monto</th>
+          <th>Saldo resultante</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tx of transacciones">
+          <td>{{ tx.fechaTransaccion | date: 'short' }}</td>
+          <td>
+            <a [routerLink]="['/transacciones']" [queryParams]="{ cuentaId: tx.cuentaId }">#{{ tx.cuentaId }}</a>
+            <span *ngIf="tx.cuentaRelacionadaId" class="muted"> → #{{ tx.cuentaRelacionadaId }}</span>
+          </td>
+          <td>{{ tx.tipoTransaccion }}</td>
+          <td><span class="badge" [ngClass]="tx.tipoMovimiento?.toLowerCase()">{{ tx.tipoMovimiento }}</span></td>
+          <td>{{ tx.monto | number: '1.2-2' }}</td>
+          <td>{{ tx.saldoResultante | number: '1.2-2' }}</td>
+          <td>{{ tx.descripcion }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="empty" *ngIf="!cargando && transacciones.length === 0">No hay transacciones registradas.</p>
+    <p class="empty" *ngIf="cargando">Cargando...</p>
+  </div>
+</div>

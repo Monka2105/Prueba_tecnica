@@ -18,6 +18,6 @@ public class OpenApiConfig {
                         .version("v1.0")
                         .contact(new Contact()
                                 .name("Proyecto Spring")
-                                .email("conductoresprofesionales100@gmail.com")));
+                                .email("emanuel.morenom1403@gmail.com")));
     }
 }

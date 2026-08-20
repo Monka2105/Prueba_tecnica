@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>Nueva cuenta</h1>
+  <a class="btn secondary" routerLink="/cuentas">Volver</a>
+</div>
+
+<div class="alert error" *ngIf="error">{{ error }}</div>
+
+<div class="card">
+  <form [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="clienteId">Cliente</label>
+        <select id="clienteId" formControlName="clienteId">
+          <option [ngValue]="null" disabled>Selecciona un cliente</option>
+          <option *ngFor="let cliente of clientes" [ngValue]="cliente.id">
+            {{ cliente.nombres }} {{ cliente.apellidos }} ({{ cliente.numeroDocumento }})
+          </option>
+        </select>
+        <span class="form-error" *ngIf="form.get('clienteId')?.touched && form.get('clienteId')?.invalid">
+          Selecciona un cliente.
+        </span>
+      </div>
+
+      <div class="form-field">
+        <label for="tipoCuenta">Tipo de cuenta</label>
+        <select id="tipoCuenta" formControlName="tipoCuenta">
+          <option value="CUENTA_AHORROS">Ahorros</option>
+          <option value="CUENTA_CORRIENTE">Corriente</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="saldo">Saldo inicial</label>
+        <input id="saldo" type="number" step="0.01" min="0" formControlName="saldo" />
+        <span class="form-error" *ngIf="form.get('saldo')?.touched && form.get('saldo')?.invalid">
+          Ingresa un saldo válido (mayor o igual a 0).
+        </span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" type="submit" [disabled]="guardando">{{ guardando ? 'Guardando...' : 'Guardar' }}</button>
+      <a class="btn secondary" routerLink="/cuentas">Cancelar</a>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,14 @@
+<header class="topbar">
+  <div class="topbar-inner container">
+    <span class="brand">{{ title }}</span>
+    <nav class="nav">
+      <a routerLink="/clientes" routerLinkActive="active">Clientes</a>
+      <a routerLink="/cuentas" routerLinkActive="active">Cuentas</a>
+      <a routerLink="/transacciones" routerLinkActive="active">Transacciones</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <router-outlet></router-outlet>
+</main>

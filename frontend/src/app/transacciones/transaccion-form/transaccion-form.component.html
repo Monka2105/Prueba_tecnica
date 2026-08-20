@@ -1,0 +1,65 @@
+<div class="page-header">
+  <h1>Nueva transacción</h1>
+  <a class="btn secondary" routerLink="/transacciones">Volver</a>
+</div>
+
+<div class="alert error" *ngIf="error">{{ error }}</div>
+
+<div class="card">
+  <form [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="cuentaId">Cuenta</label>
+        <select id="cuentaId" formControlName="cuentaId">
+          <option [ngValue]="null" disabled>Selecciona una cuenta</option>
+          <option *ngFor="let cuenta of cuentas" [ngValue]="cuenta.id">
+            {{ cuenta.numeroCuenta }} - {{ cuenta.clienteNombreCompleto }}
+          </option>
+        </select>
+        <span class="form-error" *ngIf="form.get('cuentaId')?.touched && form.get('cuentaId')?.invalid">
+          Selecciona una cuenta.
+        </span>
+      </div>
+
+      <div class="form-field">
+        <label for="tipoTransaccion">Tipo de transacción</label>
+        <select id="tipoTransaccion" formControlName="tipoTransaccion">
+          <option value="CONSIGNACION">Consignación</option>
+          <option value="RETIRO">Retiro</option>
+          <option value="TRANSFERENCIA">Transferencia</option>
+        </select>
+      </div>
+
+      <div class="form-field" *ngIf="esTransferencia">
+        <label for="cuentaRelacionadaId">Cuenta destino</label>
+        <select id="cuentaRelacionadaId" formControlName="cuentaRelacionadaId">
+          <option [ngValue]="null" disabled>Selecciona la cuenta destino</option>
+          <option *ngFor="let cuenta of cuentas" [ngValue]="cuenta.id">
+            {{ cuenta.numeroCuenta }} - {{ cuenta.clienteNombreCompleto }}
+          </option>
+        </select>
+        <span class="form-error" *ngIf="form.get('cuentaRelacionadaId')?.touched && form.get('cuentaRelacionadaId')?.invalid">
+          Selecciona la cuenta destino.
+        </span>
+      </div>
+
+      <div class="form-field">
+        <label for="monto">Monto</label>
+        <input id="monto" type="number" step="0.01" min="0.01" formControlName="monto" />
+        <span class="form-error" *ngIf="form.get('monto')?.touched && form.get('monto')?.invalid">
+          Ingresa un monto mayor a 0.
+        </span>
+      </div>
+
+      <div class="form-field">
+        <label for="descripcion">Descripción</label>
+        <input id="descripcion" type="text" formControlName="descripcion" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" type="submit" [disabled]="guardando">{{ guardando ? 'Guardando...' : 'Registrar' }}</button>
+      <a class="btn secondary" routerLink="/transacciones">Cancelar</a>
+    </div>
+  </form>
+</div>

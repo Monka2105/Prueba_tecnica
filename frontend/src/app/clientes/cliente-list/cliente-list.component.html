@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h1>Clientes</h1>
+  <a class="btn" routerLink="/clientes/nuevo">+ Nuevo cliente</a>
+</div>
+
+<div class="alert error" *ngIf="error">{{ error }}</div>
+
+<div class="card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Documento</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Fecha nacimiento</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{ cliente.tipoDocumento }} {{ cliente.numeroDocumento }}</td>
+          <td>{{ cliente.nombres }} {{ cliente.apellidos }}</td>
+          <td>{{ cliente.email }}</td>
+          <td>{{ cliente.fechaNacimiento }}</td>
+          <td class="actions-cell">
+            <a class="btn secondary small" [routerLink]="['/cuentas']" [queryParams]="{ clienteId: cliente.id }">Cuentas</a>
+            <a class="btn secondary small" [routerLink]="['/clientes', cliente.id, 'editar']">Editar</a>
+            <button class="btn danger small" (click)="eliminar(cliente)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="empty" *ngIf="!cargando && clientes.length === 0">No hay clientes registrados.</p>
+    <p class="empty" *ngIf="cargando">Cargando...</p>
+  </div>
+</div>
